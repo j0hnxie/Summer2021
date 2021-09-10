@@ -8,7 +8,7 @@ from torchvision.transforms import ToTensor
 from clDice import soft_cldice
 import os
 
-def load_data(batch_size = 8):
+def load_data(batch_size = 1):
     inputs = os.listdir('/Users/johnxie/Documents/Summer2021/data/train/train_sample')
     targets = os.listdir('/Users/johnxie/Documents/Summer2021/data/mask/mask_sample') 
     inputs.sort()
@@ -22,8 +22,8 @@ def load_data(batch_size = 8):
     train_size = int(.8 * len(dataset))
     validation_size = len(dataset) - train_size
     training_dataset, validation_dataset = random_split(dataset, [train_size, validation_size])
-    training_dataloader = DataLoader(dataset=training_dataset, batch_size=8, shuffle=True)
-    validation_dataloader = DataLoader(dataset=validation_dataset, batch_size=8, shuffle=True)
+    training_dataloader = DataLoader(dataset=training_dataset, batch_size = batch_size, shuffle=True)
+    validation_dataloader = DataLoader(dataset=validation_dataset, batch_size = batch_size, shuffle=True)
 
     return training_dataloader, validation_dataloader
 
@@ -38,7 +38,7 @@ def model(classes):
     return model
 
 def loss():
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = soft_cldice()
     return criterion
 
 def optimizer(model):
@@ -62,7 +62,7 @@ def training(model, device, loss_fn, optimizer, training_data, validation_data, 
 training_data, validation_data = load_data()
 device = device()
 loss_fn = loss()
-unet = model(2)
+unet = model(3)
 
 # from torchinfo import summary
 # summary(unet, input_size=(64, 1, 1000, 1000))

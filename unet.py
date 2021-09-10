@@ -222,12 +222,10 @@ class UNet(nn.Module):
          
         # encoder pathway, save outputs for merging
         for i, module in enumerate(self.down_convs):
-            print(module)
             x, before_pool = module(x)
             encoder_outs.append(before_pool)
 
         for i, module in enumerate(self.up_convs):
-            print(module)
             before_pool = encoder_outs[-(i+2)]
             x = module(before_pool, x)
         

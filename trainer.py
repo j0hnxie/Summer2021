@@ -69,17 +69,22 @@ class Trainer:
         batch_iter = tqdm(enumerate(self.training_DataLoader), 'Training', total=len(self.training_DataLoader),
                           leave=False)
 
+        counter = 0
+
         for i, (x, y) in batch_iter:
             input, target = x.to(self.device), y.to(self.device)  # send to device (GPU or CPU)
             self.optimizer.zero_grad()  # zerograd the parameters
             out = self.model(input)  # one forward pass
+            print(list(out.size()))
+            print(list(target.size()))
             loss = self.criterion(out, target)  # calculate loss
             loss_value = loss.item()
             train_losses.append(loss_value)
             loss.backward()  # one backward pass
             self.optimizer.step()  # update the parameters
             
-            print(i)
+            print(counter)
+            counter += 1
             batch_iter.set_description(f'Training: (loss {loss_value:.4f})')  # update progressbar
 
         self.training_loss.append(np.mean(train_losses))
