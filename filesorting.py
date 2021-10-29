@@ -2,15 +2,21 @@ import pathlib
 import shutil
 import os
 
-files = os.listdir('/Users/johnxie/Documents/Summer2021/archive/train')
-fileList = os.listdir('/Users/johnxie/Documents/Summer2021/archive/mask')
-files.sort()
-fileList.sort()
+path = os.getcwd()
+print(path)
 
-for i in range(len(files)):
-    print(files[i], fileList[i])
-# 
-# 
+files = os.listdir(path + '\\data\\train')
+files.sort()
+
+print(files)
+
+for i in files:
+    i = path + '\\data\\train\\' + i
+    if "_mask" in i:
+        temp = i.replace("train", "mask")
+        print(i)
+        print(temp)
+        os.rename(i, temp)
 
 # print(root)
 # print(location)

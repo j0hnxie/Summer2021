@@ -10,8 +10,8 @@ import os
 
 def load_data(batch_size = 1):
     path = os.getcwd()
-    inputPath = path + '\data\\train\\train_sample'
-    targetPath = path + path + '\data\mask\mask_sample'
+    inputPath = path + '\\data\\train\\train_sample'
+    targetPath = path + path + '\\data\\mask\\mask_sample'
     inputs = os.listdir(inputPath)
     targets = os.listdir(targetPath) 
     inputs.sort()
