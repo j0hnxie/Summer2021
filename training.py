@@ -9,14 +9,17 @@ from clDice import soft_cldice
 import os
 
 def load_data(batch_size = 1):
-    inputs = os.listdir('/Users/johnxie/Documents/Summer2021/data/train/train_sample')
-    targets = os.listdir('/Users/johnxie/Documents/Summer2021/data/mask/mask_sample') 
+    path = os.getcwd()
+    inputPath = path + '\data\\train\\train_sample'
+    targetPath = path + path + '\data\mask\mask_sample'
+    inputs = os.listdir(inputPath)
+    targets = os.listdir(targetPath) 
     inputs.sort()
     targets.sort()
 
     for i in range(len(inputs)):
-        inputs[i] = '/Users/johnxie/Documents/Summer2021/data/train/train_sample/' + inputs[i]
-        targets[i] = '/Users/johnxie/Documents/Summer2021/data/mask/mask_sample/' + targets[i]
+        inputs[i] = inputPath + inputs[i]
+        targets[i] = targetPath + targets[i]
 
     dataset = CustomDataset(inputs=inputs, targets=targets, transform=ToTensor())
     train_size = int(.8 * len(dataset))
@@ -29,6 +32,7 @@ def load_data(batch_size = 1):
 
 def device():
     if torch.cuda.is_available():
+        print("yes")
         return torch.device('cuda')
     else:
         return torch.device('cpu')
